@@ -1,6 +1,10 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const AppWindow = require('../common/appWindow')
+const DataStore = require('../common/dataStore')
+
+// 必须这一步，否则会报错
+DataStore.initRenderer()
 
 let mainWindow = null
 
