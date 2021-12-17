@@ -5,20 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-  <title>Music Player</title>
+  <title>Add Music</title>
   <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
   <div class="container">
-    <h2 class="mt-4 mb-4">音乐播放器</h2>
+    <h4 class="mt-2">添加音乐</h4>
+    <ul id="music-list" class="list-group mt-2 mb-2">
+      <p>未选择任何音乐文件</p>
+    </ul>
     <div class="d-grid gap-2">
-      <button id="add-music-button" type="button" class="btn btn-primary btn-lg btn-block">
-        添加音乐到曲库
+      <button id="select-file-button" type="button" class="btn btn-outline-primary btn-block">
+        选择文件
       </button>
     </div>
   </div>
   <script>
-    require('./index.js')
+    require('./addMusic.js')
   </script>
 </body>
 </html>
