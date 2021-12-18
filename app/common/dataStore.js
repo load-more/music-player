@@ -32,4 +32,9 @@ module.exports = class DataStore extends Store {
     const list = this.getList()
     return list.find(item => item.id === id)
   }
+  remove(id) {
+    const list = this.getList()
+    const newList = list.filter(item => item.id !== id)
+    this.set('musicData', newList)
+  }
 }

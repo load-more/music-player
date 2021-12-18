@@ -37,23 +37,18 @@ $('#music-list').addEventListener('click', (event) => {
     audio.pause()
     classList.replace('icon-pause', 'icon-play')
   } else if (classList.contains('icon-delete-fill')) { // 如果点击的是“删除”
-    //
+    if (id === currentFile.id) { // 如果删除的是当前播放歌曲
+      audio.pause()
+      $('#music-title').innerHTML = '暂无播放'
+      $('#music-time').innerHTML = '00:00 / 00:00'
+      $('#progress-bar').style.width = '0%'
+    }
+    store.remove(id)
+    renderMusicList()
   }
 })
 
-// 当音频加载完成时，更新播放歌曲信息
-audio.addEventListener('loadedmetadata', () => {
-  $('#music-title').innerHTML = `正在播放：<strong>${currentFile.fileName}</strong>`
-  $('#music-time').innerHTML = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`
-})
-
-// 当音频播放时，每秒更新进度
-audio.addEventListener('timeupdate', () => {
-  $('#music-time').innerHTML = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`
-  $('#progress-bar').style.width = `${audio.currentTime / audio.duration * 100}%`
-})
-
-ipcRenderer.on('render-music-list', () => {
+const renderMusicList = () => {
   const list = store.getList()
   const html = list.reduce((html, item) => {
     html += `<li class="list-group-item">
@@ -73,4 +68,20 @@ ipcRenderer.on('render-music-list', () => {
     return html
   }, '')
   $('#music-list').innerHTML = html
+}
+
+// 当音频加载完成时，更新播放歌曲信息
+audio.addEventListener('loadedmetadata', () => {
+  $('#music-title').innerHTML = `正在播放：<strong>${currentFile.fileName}</strong>`
+  $('#music-time').innerHTML = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`
+})
+
+// 当音频播放时，每秒更新进度
+audio.addEventListener('timeupdate', () => {
+  $('#music-time').innerHTML = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`
+  $('#progress-bar').style.width = `${audio.currentTime / audio.duration * 100}%`
+})
+
+ipcRenderer.on('render-music-list', () => {
+  renderMusicList()
 })
