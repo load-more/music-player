@@ -7,12 +7,18 @@ module.exports = class DataStore extends Store {
     super(config)
   }
   getList() {
-    return this.get('musicData') || []
+    const list = this.get('musicData') || {}
+    const result = []
+    // 将对象转为数组并返回
+    for (let i in list) {
+      result.push(list[i])
+    }
+    return result
   }
   addList(items) {
     if (!items) return
     if (Array.isArray(items)) {
-      const list = this.getList()
+      const list = this.get('musicData') || {}
       const newList = items.map(item => {
         return {
           id: uuidv4(), // 生成唯一标识 id

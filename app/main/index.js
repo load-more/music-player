@@ -3,10 +3,11 @@ const path = require('path')
 const AppWindow = require('../common/appWindow')
 const DataStore = require('../common/dataStore')
 
-// 必须这一步，否则会报错
+// 主进程中必须这一步，否则会报错，参照 electron-store 文档
 DataStore.initRenderer()
 
 let mainWindow = null
+let addMusicWindow = null
 
 const createWindow = () => {
   const win = new AppWindow({}, path.join(__dirname, '../renderer/index.html'))
@@ -14,8 +15,17 @@ const createWindow = () => {
   return win
 }
 
+const renderMusicList = () => {
+  mainWindow.webContents.send('render-music-list')
+}
+
 app.on('ready', () => {
   mainWindow = createWindow()
+
+  // 窗口页面加载完成之后，渲染音乐列表
+  mainWindow.webContents.on('did-finish-load', () => {
+    renderMusicList()
+  })
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -31,7 +41,7 @@ app.on('window-all-closed', () => {
 })
 
 ipcMain.on('add-music', () => {
-  const addMusicWindow = new AppWindow({
+  addMusicWindow = new AppWindow({
     width: 450,
     height: 400,
     parent: mainWindow
@@ -47,4 +57,12 @@ ipcMain.handle('select-file', async () => {
     ]
   })
   return files
+})
+
+ipcMain.on('render-imported-music', () => {
+  renderMusicList()
+})
+
+ipcMain.on('close-add-music-window', () => {
+  addMusicWindow.close()
 })

@@ -22,5 +22,8 @@ $('#select-file-button').addEventListener('click', async () => {
 
 $('#import-file-button').addEventListener('click', () => {
   store.addList(filePaths)
-  console.log(store.getList())
+
+  ipcRenderer.send('render-imported-music')
+  
+  ipcRenderer.send('close-add-music-window')
 })

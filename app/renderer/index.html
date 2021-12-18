@@ -7,15 +7,19 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
   <title>Music Player</title>
   <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link href="https:////at.alicdn.com/t/font_3028028_9e5ohkooc67.css" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <h2 class="mt-4 mb-4">音乐播放器</h2>
-    <div class="d-grid gap-2">
+    <h4 class="mt-2">音乐播放器</h4>
+    <div class="d-grid gap-2 mt-2 mb-2">
       <button id="add-music-button" type="button" class="btn btn-primary btn-lg btn-block">
         添加音乐到曲库
       </button>
     </div>
+    <ul id="music-list" class="list-group">
+      <li class="list-group-item">An item</li>
+    </ul>
   </div>
   <script>
     require('./index.js')
