@@ -5,7 +5,24 @@
   "main": "app/main/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "productName": "simple-music-player",
+    "appId": "com.load-more.music-player",
+    "win":{
+      "target": [{
+        "target":"nsis"
+      }]
+    },
+    "nsis": {
+      "shortcutName": "simple-music-player",
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": true
+    }
   },
   "author": "Shylobing",
   "license": "ISC",
@@ -15,6 +32,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "electron": "^16.0.5"
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5"
   }
 }
