@@ -7,18 +7,12 @@ module.exports = class DataStore extends Store {
     super(config)
   }
   getList() {
-    const list = this.get('musicData') || {}
-    const result = []
-    // 将对象转为数组并返回
-    for (let i in list) {
-      result.push(list[i])
-    }
-    return result
+    return this.get('musicData') || []
   }
   addList(items) {
     if (!items) return
     if (Array.isArray(items)) {
-      const list = this.get('musicData') || {}
+      const list = this.getList()
       const newList = items.map(item => {
         return {
           id: uuidv4(), // 生成唯一标识 id
@@ -26,12 +20,12 @@ module.exports = class DataStore extends Store {
           fileName: path.basename(item)
         }
       }).filter(item => { // 去重
-        for (let i in list) {
-          if (list[i].id === item.id) return false
+        for (let i of list) {
+          if (i.filePath === item.filePath) return false
         }
         return true
       })
-      this.set('musicData', { ...list, ...newList })
+      this.set('musicData', [ ...list, ...newList ])
     }
   }
 }

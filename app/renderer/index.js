@@ -10,6 +10,7 @@ $('#add-music-button').addEventListener('click', () => {
 
 ipcRenderer.on('render-music-list', () => {
   const list = store.getList()
+  console.log(list)
   const html = list.reduce((html, item) => {
     html += `<li class="list-group-item">
     <div class="row">
