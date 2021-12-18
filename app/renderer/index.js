@@ -5,7 +5,8 @@ const DataStore = require('../common/dataStore')
 const store = new DataStore({ name: 'musicData' })
 const audio = new Audio()
 
-let currentFile = null
+let currentFile = {}
+let currentClassList = null
 
 $('#add-music-button').addEventListener('click', () => {
   ipcRenderer.send('add-music')
@@ -16,15 +17,25 @@ $('#music-list').addEventListener('click', (event) => {
 
   const { dataset, classList } = event.target
   const id = dataset.id // 歌曲 id
+  
 
   if (!id) return // 如果 id 不存在，说明点击的是其他区域，直接返回
   
   if (classList.contains('icon-play')) { // 如果点击的是“播放”
-    currentFile = store.find(id)
-    audio.src = currentFile.filePath
+    const file = store.find(id)
+    if (file.id !== currentFile.id) { // 如果当前点击的是不同歌曲
+      if (!audio.paused) { // 如果没有暂停，则把正在播放的歌曲暂停
+        currentClassList.replace('icon-pause', 'icon-play')
+      }
+      currentFile = file
+      audio.src = file.filePath
+      currentClassList = classList // 缓存正在播放的歌曲
+    }
     audio.play()
+    classList.replace('icon-play', 'icon-pause') // 切换成“暂停”图标
   } else if (classList.contains('icon-pause')) { // 如果点击的是“暂停”
-    //
+    audio.pause()
+    classList.replace('icon-pause', 'icon-play')
   } else if (classList.contains('icon-delete-fill')) { // 如果点击的是“删除”
     //
   }
