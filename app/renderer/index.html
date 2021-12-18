@@ -7,7 +7,8 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
   <title>Music Player</title>
   <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <link href="https:////at.alicdn.com/t/font_3028028_9e5ohkooc67.css" rel="stylesheet">
+  <link href="https://at.alicdn.com/t/font_3028028_vx6v5b3eaj.css" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
   <div class="container">
@@ -19,6 +20,32 @@
     </div>
     <ul id="music-list" class="list-group">
     </ul>
+  </div>
+  <div class="container">
+    <div class="fixed-bottom">
+      <hr>
+      <div class="row m-4">
+        <div class="col">
+          <span id="music-title">暂无播放</span>
+        </div>
+        <div class="col">
+          <span id="music-time">00:00 / 00:00</span>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="progress">
+          <div
+            class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+            id="progress-bar"
+            style="width: 0;"
+            role="progressbar"
+            aria-valuenow=""
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
+    </div>
   </div>
   <script>
     require('./index.js')
